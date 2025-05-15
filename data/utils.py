@@ -7,6 +7,12 @@ from PIL import Image
 from sklearn.metrics import pairwise_distances
 import random
 
+# 兼容 Pillow 新旧版本的重采样方式
+if hasattr(Image, 'Resampling'):
+    RESAMPLE = Image.Resampling.LANCZOS
+else:
+    RESAMPLE = Image.ANTIALIAS
+
 def read_bundler(fname):
     f = open(fname)
     f.readline()
@@ -195,7 +201,7 @@ def load_background_image_aa(path, shape):
         Load background image and resize, scale [0,1], return array [H,W,3]
     '''
     background = Image.open(path)
-    background = background.resize(shape,Image.ANTIALIAS)
+    background = background.resize(shape, RESAMPLE)
     #background = cv2.resize(background, shape,interpolation=cv2.INTER_LANCZOS4)
     background = np.asarray(background)
     background = background.astype(np.float32) / 255

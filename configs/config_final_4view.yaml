@@ -1,13 +1,13 @@
 data:
   fake_cube: True
   animals: 
-    data_dir: "../fake_animals_v4/"
+    data_dir: "fake_animals_v4/"
   same_views: False
   scene:
     single_scene: True
     scene_name: scene1
     distance_to_cube: 3
-    scene_folder: ../camo-data/
+    scene_folder: camo-data/
     n_views_ref: 4
     n_views_sup: 2
     n_views_val: 1

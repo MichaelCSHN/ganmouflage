@@ -2,3 +2,8 @@
 *.csv
 **/__pycache__/**
 test*/
+camo-data/
+fake_animals_v4/
+test_code/
+test_result/
+*.run

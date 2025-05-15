@@ -80,7 +80,7 @@ class CamoDataset_Fake:
         else:
             self.rot_limit = None
         self.verts, self.faces, _ = load_obj("fake_cube/model_simplified.obj", load_textures=False)
-        self.verts, self.faces, _ = load_obj("fake_chair/chair.obj", load_textures=False)
+        # self.verts, self.faces, _ = load_obj("fake_chair/chair.obj", load_textures=False)
         Ry = np.array([np.cos(150/180*np.pi), 0, -np.sin(150/180*np.pi),
                        0, 1, 0,
                        np.sin(150/180*np.pi), 0, np.cos(150/180*np.pi)]).reshape(3, 3)
