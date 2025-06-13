@@ -222,7 +222,11 @@ class CamoDataset_Animals:
         return data
 
     def get_all_views(self, idx,n_ref,val_only=False,ref_views=[],fixed_position=False):
+        # 使用模运算确保索引在有效范围内
+        # obj_idx = idx % len(self.object_list)
+        # obj_path = self.object_list[obj_idx]
         obj_path = self.object_list[idx]
+
         #obj_path = self.root_dir + f"{model_id}/model_simplified.obj"
         pc = np.load(obj_path.replace(".obj",".npy"))
         verts, faces, _ = load_obj(obj_path, load_textures=False)

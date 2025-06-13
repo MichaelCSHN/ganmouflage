@@ -2,7 +2,7 @@
 *.csv
 **/__pycache__/**
 test*/
-camo-data/
+scenes/
 fake_animals_v4/
 test_code/
 test_result/

@@ -1,83 +1,79 @@
 data:
-  fake_cube: True
+  fake_cube: True         # 是否使用虚拟立方体（True/False），推荐True用于合成数据
   animals: 
-    data_dir: "fake_animals_v4/"
-  same_views: False
+    data_dir: "obj4train/"  # 动物模型数据目录，字符串，推荐为实际obj模型存放路径
+  same_views: False       # 是否所有样本使用相同视角（True/False），推荐False
   scene:
-    single_scene: True
-    scene_name: scene1
-    distance_to_cube: 3
-    scene_folder: camo-data/
-    n_views_ref: 4
-    n_views_sup: 2
-    n_views_val: 1
-    target_size: [384,576]
-    cube_scale: 0.8
-    val_reserve_number: 3
-  train_cube_scale_range: [0.5,1.5]
-  
+    single_scene: True    # 是否只用一个场景（True/False），推荐True用于单场景实验
+    scene_name: scene1    # 场景名称，字符串，需与scene_folder下实际场景文件夹一致
+    distance_to_cube: 0   # 相机到立方体的距离，float，推荐2~5，影响视角远近
+    scene_folder: scenes/ # 场景数据根目录，字符串
+    n_views_ref: 4        # 参考视角数量，int，推荐2~8
+    n_views_sup: 2        # 支持视角数量，int，推荐1~4
+    n_views_val: 1        # 验证视角数量，int，推荐1~2
+    target_size: [256, 384] # 图像目标分辨率，[高,宽]，推荐[256,384]或[512,768]
+    cube_scale: 0.8       # 立方体缩放系数，float，推荐0.5~2.0
+    val_reserve_number: 3 # 验证集保留数量，int，推荐1~5
+  train_cube_scale_range: [0.6,1.0] # 训练时立方体缩放范围，[min,max]，float，推荐[0.2,0.8]
   shape:
-    train_rot_limit: [30,180,30]
+    train_rot_limit: [0, 0, 0] # 训练时旋转限制，[x,y,z]度，int，推荐[0,0,180]（z轴可旋转）
 
 model:
   args:
-    cat_relative_depth: False
-    cat_surface_normals: True
+    cat_relative_depth: False   # 是否拼接相对深度特征，True/False，推荐False
+    cat_surface_normals: True   # 是否拼接表面法线特征，True/False，推荐True
 
   decoder:
-    x_dim: 3
-    embedder: fixed_sincos
-    pe_dim: 128 #positional embedding dim, valid for learnable positional embedding
-    z_dim: 230
-    hidden_dim_1: 256
-    hidden_dim_2: 128
-    n_layers_stage1: 3
-    n_layers_stage2: 3
-
+    x_dim: 3                   # 输入x特征维度，int，通常为2或3（如uv或xyz）
+    embedder: fixed_sincos      # 位置编码类型，字符串，可选fixed_sincos/learnable
+    pe_dim: 128                 # 位置编码维度，int，推荐64/128/256
+    z_dim: 230                  # 隐变量z维度，int，推荐128~512
+    hidden_dim_1: 256           # 第一隐藏层维度，int，推荐128/256/512
+    hidden_dim_2: 128           # 第二隐藏层维度，int，推荐64/128/256
+    n_layers_stage1: 3          # 第一阶段MLP层数，int，推荐2~4
+    n_layers_stage2: 3          # 第二阶段MLP层数，int，推荐2~4
 
   image_encoder:
-    type: resnet18unethigh
+    type: resnet18unethigh      # 图像编码器类型，字符串，推荐resnet18unethigh
     args:
-      normalize: True
+      normalize: True           # 是否归一化输入图像，True/False，推荐True
 
   discriminator:
-    #input_size: 192
-    nh: 64
-    norm: instance
+    #input_size: 192            # 判别器输入尺寸，int，通常自动推断
+    nh: 64                      # 判别器隐藏通道数，int，推荐32/64/128
+    norm: instance              # 归一化类型，字符串，可选instance/batch
 
 training:
-  batch_size: 2
-  multi_gpu: True
-  model_selection_metric: null
-  model_selection_mode: maximize
-  print_every: 25
-  visualize_every: 500
-  checkpoint_every: 5000
-  validate_every: -1
-  backup_every: 5000
-  #gradient_penalties_reg: 10.
-  lr_warmup: 200
-  lr_step: [10000000000000]
-  max_grad_norm: 5
-  max_epoch: 50
-  gamma: 0.2
-  num_workers: 4
+  max_epoch: 10                  # 最大训练轮数，int，推荐50~200
+  print_every: 100              # 每多少步打印一次日志，int，推荐25~200
+  visualize_every: 1000         # 每多少步可视化一次，int，推荐500~2000
+  checkpoint_every: 1000        # 每多少步保存一次checkpoint，int，推荐1000~5000
+  backup_every: 1000            # 每多少步备份一次，int，推荐1000~5000
+  validate_every: -1            # 每多少步验证一次，-1表示不自动验证
+  batch_size: 1                 # 批大小，int，推荐1~8（受显存限制）
+  multi_gpu: True               # 是否多卡训练，True/False
+  model_selection_metric: null  # 模型选择指标，字符串或null
+  model_selection_mode: maximize # 指标优化方向，maximize/minimize
+  lr_warmup: 200                # 学习率warmup步数，int，推荐100~1000
+  lr_step: [10000000000000]     # 学习率衰减步数，list[int]，极大值表示不衰减
+  max_grad_norm: 5              # 梯度裁剪阈值，float，推荐1~10
+  gamma: 0.2                    # 学习率衰减系数，float，推荐0.1~0.5
+  num_workers: 4                # dataloader线程数，int，推荐2~8
 
-  lr_g: 0.0002
-  lr_d: 0.0001
-  betas: [0.5,0.99]
-  w_pix_ren: 1
-  w_pix_ref: 1
-  w_gan_ren: 0.5
-  w_gan_ref: 0
+  lr_g: 0.0002                  # 生成器学习率，float，推荐1e-4~2e-4
+  lr_d: 0.0001                  # 判别器学习率，float，推荐1e-4~2e-4
+  betas: [0.5,0.99]             # Adam优化器betas参数，list[float]，推荐[0.5,0.99]
+  w_pix_ren: 1                  # 渲染像素损失权重，float，推荐0.5~2
+  w_pix_ref: 1                  # 参考像素损失权重，float，推荐0.5~2
+  w_gan_ren: 0.5                # 渲染GAN损失权重，float，推荐0.1~1
+  w_gan_ref: 0                  # 参考GAN损失损失权重，float，推荐0或0.1
 
-  pix_ren_type: perceptual
-  pix_ref_type: perceptual
-  gan_type: standard
+  pix_ren_type: perceptual      # 渲染像素损失类型，字符串，perceptual/L1/MSE
+  pix_ref_type: perceptual      # 参考像素损失类型，字符串，perceptual/L1/MSE
+  gan_type: standard            # GAN类型，字符串，standard/wgan等
 
-  lambda_gp: 10
-  update_g_every: 1
+  lambda_gp: 10                 # 判别器梯度惩罚系数，float，推荐10
+  update_g_every: 1             # 每多少步更新一次生成器，int，推荐1
 
-  crop_size: 128
-  crop_transform: True
-  
+  crop_size: 128                # 随机裁剪尺寸，int，推荐64/128/256
+  crop_transform: True          # 是否启用裁剪增强，True/False

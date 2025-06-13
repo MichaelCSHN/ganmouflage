@@ -6,12 +6,7 @@ import os
 from PIL import Image
 from sklearn.metrics import pairwise_distances
 import random
-
-# 兼容 Pillow 新旧版本的重采样方式
-if hasattr(Image, 'Resampling'):
-    RESAMPLE = Image.Resampling.LANCZOS
-else:
-    RESAMPLE = Image.ANTIALIAS
+from PIL.Image import Resampling
 
 def read_bundler(fname):
     f = open(fname)
@@ -70,7 +65,12 @@ def calculate_rotation(cube_vertices,save_type=0):
 
 
 def get_scene_parameters_olddata(scene_dir,cube_save_type=0,cube_name=None):
-    focals, Rts = read_bundler(scene_dir + "bundle/bundle.out")
+    # Try reading bundle.out from root directory first
+    try:
+        focals, Rts = read_bundler(scene_dir + "bundle.out")
+    except:
+        # If that fails, try reading from bundle subdirectory
+        focals, Rts = read_bundler(scene_dir + "bundle/bundle.out")
     # filter our good camera
     view_filenames=[f"view{x+1}.jpg" for x in range(len(focals))]
     if os.path.isfile(scene_dir + "good_cams.txt"):
@@ -91,7 +91,7 @@ def get_scene_parameters_olddata(scene_dir,cube_save_type=0,cube_name=None):
     #calculate cube rotation R from coordinates
     cube_R=calculate_rotation(box_vertices,save_type=cube_save_type)
 
-    return focals, Rts, view_filenames, box_vertices,cube_R
+    return focals, Rts, view_filenames, box_vertices, cube_R
 
 
 def load_cube_vertices(fname):
@@ -201,9 +201,8 @@ def load_background_image_aa(path, shape):
         Load background image and resize, scale [0,1], return array [H,W,3]
     '''
     background = Image.open(path)
-    background = background.resize(shape, RESAMPLE)
-    #background = cv2.resize(background, shape,interpolation=cv2.INTER_LANCZOS4)
-    background = np.asarray(background)
+    background = background.resize(shape, Resampling.LANCZOS)
+    background = np.array(background)
     background = background.astype(np.float32) / 255
     # background=background.transpose(2,0,1)
     return background

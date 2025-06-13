@@ -37,8 +37,8 @@ conda create --name camoGAN_py38pt113cu117 --file environment_camoGAN_py38pt113c
 ## 数据集准备
 
 - **场景图片数据**  
-  下载：[Owens et al., 2014 camo-data.zip](https://andrewowens.com/camo/camo-data.zip)  
-  解压到项目外部目录，确保路径为 `../camo-data/`。  
+  下载：[Owens et al., 2014 scenes.zip](https://andrewowens.com/camo/scenes.zip)  
+  解压到项目外部目录，确保路径为 `../scenes/`。  
   然后运行：
   ```bash
   python get_num_views.py
@@ -73,7 +73,7 @@ conda create --name camoGAN_py38pt113cu117 --file environment_camoGAN_py38pt113c
 
 ## 重要说明
 
-- `.gitignore` 已自动忽略大数据目录和中间结果：`camo-data/`、`fake_animals_v4/`、`test_code/`、`test_result/`
+- `.gitignore` 已自动忽略大数据目录和中间结果：`scenes/`、`fake_animals_v4/`、`test_code/`、`test_result/`
 - 推荐使用多卡训练，分布式配置见 `train_ddp.sh`
 - 详细依赖与复现环境见 `environment_camoGAN_py38pt113cu117.yml` 和 `environment_camoGAN_py38pt113cu117.txt`
 
@@ -103,3 +103,11 @@ conda create --name camoGAN_py38pt113cu117 --file environment_camoGAN_py38pt113c
 ---
 
 如有问题欢迎提 issue 或联系作者。
+
+## 🚀 快速开始
+
+### 1. 环境测试
+```bash
+# 运行完整测试套件
+./run_test.sh
+```

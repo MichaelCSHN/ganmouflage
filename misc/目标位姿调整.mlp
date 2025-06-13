@@ -1,0 +1,42 @@
+<!DOCTYPE MeshLabDocument>
+<MeshLabProject>
+ <MeshGroup>
+  <MLMesh filename="scenes/eshmun01/eshmun01.ply" label="eshmun01.ply" visible="1" idInFile="-1">
+   <MLMatrix44>
+1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 
+</MLMatrix44>
+   <RenderingOption wireWidth="1" solidColor="192 192 192 255" pointColor="252 233 79 255" wireColor="64 64 64 255" pointSize="3" boxColor="234 234 234 255">000111010000000000000000000000000000000010100000000100111010110000001101</RenderingOption>
+  </MLMesh>
+  <MLMesh filename="obj4train/vehicle0.obj" label="vehicle0.obj" visible="1" idInFile="-1">
+   <MLMatrix44>
+-4.37114e-08 -4.37114e-08 -1 0 -1 1.91069e-15 4.37114e-08 0 0 1 -4.37114e-08 0.137139 0 0 0 1 
+</MLMatrix44>
+   <RenderingOption wireWidth="1" solidColor="192 192 192 255" pointColor="252 233 79 255" wireColor="64 64 64 255" pointSize="3" boxColor="234 234 234 255">100001010000000000000100000001010110000010100000000100111010100000001001</RenderingOption>
+  </MLMesh>
+  <MLMesh filename="obj4train/vehicle1.obj" label="vehicle1.obj" visible="0" idInFile="-1">
+   <MLMatrix44>
+1 0 0 0 0 -4.37114e-08 -1 0 0 1 -4.37114e-08 0.12014 0 0 0 1 
+</MLMatrix44>
+   <RenderingOption wireWidth="1" solidColor="192 192 192 255" pointColor="252 233 79 255" wireColor="64 64 64 255" pointSize="3" boxColor="234 234 234 255">100001010000000000000100000001010110000010100000000100111010100000001001</RenderingOption>
+  </MLMesh>
+  <MLMesh filename="obj4train/vehicle2.obj" label="vehicle2.obj" visible="0" idInFile="-1">
+   <MLMatrix44>
+1 0 0 0 0 -4.37114e-08 -1 0 0 1 -4.37114e-08 0 0 0 0 1 
+</MLMatrix44>
+   <RenderingOption wireWidth="1" solidColor="192 192 192 255" pointColor="252 233 79 255" wireColor="64 64 64 255" pointSize="3" boxColor="234 234 234 255">100001010000000000000100000001010110000010100000000100111010100000001001</RenderingOption>
+  </MLMesh>
+  <MLMesh filename="obj4train/vehicle3.obj" label="vehicle3.obj" visible="0" idInFile="-1">
+   <MLMatrix44>
+-4.37114e-08 4.37114e-08 1 0 1 1.91069e-15 4.37114e-08 0 0 1 -4.37114e-08 0.143322 0 0 0 1 
+</MLMatrix44>
+   <RenderingOption wireWidth="1" solidColor="192 192 192 255" pointColor="252 233 79 255" wireColor="64 64 64 255" pointSize="3" boxColor="234 234 234 255">100001010000000000000100000001010110000010100000000100111010100000001001</RenderingOption>
+  </MLMesh>
+  <MLMesh filename="obj4train/vehicle4.obj" label="vehicle4.obj" visible="0" idInFile="-1">
+   <MLMatrix44>
+1 0 0 0 0 -4.37114e-08 -1 0 0 1 -4.37114e-08 0.184835 0 0 0 1 
+</MLMatrix44>
+   <RenderingOption wireWidth="1" solidColor="192 192 192 255" pointColor="252 233 79 255" wireColor="64 64 64 255" pointSize="3" boxColor="234 234 234 255">100001010000000000000100000001010110000010100000000100111010100000001001</RenderingOption>
+  </MLMesh>
+ </MeshGroup>
+ <RasterGroup/>
+</MeshLabProject>

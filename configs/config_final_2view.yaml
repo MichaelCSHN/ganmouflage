@@ -5,7 +5,7 @@ data:
   scene:
     scene_name: scene1
     distance_to_cube: 3
-    scene_folder: ../camo-data/
+    scene_folder: ../scenes/
     n_views_ref: 2
     n_views_sup: 2
     n_views_val: 1
